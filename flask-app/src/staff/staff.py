@@ -3,10 +3,10 @@ import json
 from src import db
 
 
-products = Blueprint("products", __name__)
+staff = Blueprint("staff", __name__)
 
 # Get all the products from the database
-@products.route("/products", methods=["GET"])
+@staff.route("/products", methods=["GET"])
 def get_products():
     # get a cursor object from the database
     cursor = db.get_db().cursor()
@@ -33,7 +33,7 @@ def get_products():
 
 
 # get the top 5 products from the database
-@products.route("/top5products")
+@staff.route("/top5products")
 def get_most_pop_products():
     cursor = db.get_db().cursor()
     query = """

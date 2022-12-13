@@ -2,10 +2,10 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 
-test = Blueprint("test", __name__)
+manager = Blueprint("manager", __name__)
 
 # Get all the products from the database
-@test.route("/testing", methods=["GET"])
+@manager.route("/testing", methods=["GET"])
 def get_products():
     # get a cursor object from the database
     cursor = db.get_db().cursor()
