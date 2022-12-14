@@ -86,7 +86,7 @@ def get_customer(userId):
 
 
 # Fire an employee
-@manager.route("fire/<staffId>", methods=["POST"])
+@manager.route("/fire/<staffId>", methods=["POST"])
 def fire(staffId):
     cursor = db.get_db().cursor()
     cursor.execute(
