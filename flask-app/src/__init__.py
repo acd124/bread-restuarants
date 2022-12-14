@@ -21,6 +21,7 @@ def create_app():
     app.config["MYSQL_DATABASE_HOST"] = "db"
     app.config["MYSQL_DATABASE_PORT"] = 3306
     app.config["MYSQL_DATABASE_DB"] = "restaurant"  # Change this to your DB name
+    # TODO: Fix SQL Injection
 
     # Initialize the database object with the settings above.
     db.init_app(app)

@@ -65,7 +65,7 @@ CREATE TABLE Dish (
 	PreparationTime INT NOT NULL,
 	ServingSize INT NOT NULL,
 	Calories INT NOT NULL,
-	DescriptionText TEXT NOT NULL,
+	Description TEXT NOT NULL,
 	RestaurantId INT NOT NULL,
 	PRIMARY KEY (MenuId),
 	FOREIGN KEY (RestaurantId) REFERENCES Restaurant(RestaurantId)
@@ -75,7 +75,7 @@ CREATE TABLE Beverage (
 	Name VARCHAR(50) NOT NULL,
 	Price INT NOT NULL,
 	Region VARCHAR(50),
-	Dscription TEXT NOT NULL,
+	Description TEXT NOT NULL,
 	Alcoholic BOOLEAN NOT NULL,
 	PRIMARY KEY (DrinkId)
 );
@@ -117,7 +117,7 @@ CREATE TABLE Orders (
 	EmployeeId INT NOT NULL,
 	RestaurantId INT NOT NULL,
 	TotalPrice INT NOT NULL,
-	TimePlaced DATE NOT NULL,
+	TimePlaced DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PredictedTotalPrepTime INT NOT NULL,
 	OrderStatus ENUM('cooking', 'ready', 'pending', 'done', 'cancelled') NOT NULL,
 	PRIMARY KEY (OrderId),
@@ -221,21 +221,21 @@ INSERT INTO Ingredient (IngredientId, Name, Quantity, UnitPrice, OrderDate, Shel
 INSERT INTO Ingredient (IngredientId, Name, Quantity, UnitPrice, OrderDate, ShelfLife, ExpirationDate, SupplierId, RestaurantId) VALUES (15, 'beef', 91, 9.84, '2022-06-20', 20, '2023-11-17', 1, 3);
 
 -- DISHES -------------------------------------------------------------------------------
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (1, 'Rissoto', 8, 'Italian', 14, 3, 126, 'fancy pasta dish with lots of stuff', 1);
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (2, 'Chicken Noodle Soup', 44, NULL, 20, 2, 2, 'Made from a traditional Chicken broth with buckwheat noodles', 1);
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (3, 'Corndog', 48, 'American', 29, 3, 280, 'A cafeteria favorite, nice and simply made', 1);
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (4, 'Spaghetti and Meatballs', 26, 'Italian', 30, 2, 232, 'Almost like mother made it, but only she could get it right', 1);
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (5, 'Biryani', 21, 'Indian', 29, 1, 341, 'A mixed rice dish made with love and a little bit of something special', 1);
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (6, 'Ceasar Salad', 44, 'Italian', 4, 1, 178, 'curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis', 2);
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (7, 'Hambuger', 20, 'zero tolerance', 30, 2, 282, 'lectus vestibulum quam sapien varius ut blandit non interdum in', 2);
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (8, 'Nachos', 41, 'support', 8, 2, 159, 'sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique', 2);
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (9, 'Hot Wings', 24, 'workforce', 18, 2, 51, 'odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique', 2);
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (10, 'Vegtable Soup', 48, 'Persistent', 30, 3, 163, 'ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae', 2);
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (11, 'Green Salad', 22, 'time-frame', 30, 2, 55, 'ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in sagittis', 3);
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (12, 'Organic Smoothie', 13, 'Secured', 9, 3, 158, 'quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse', 3);
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (13, 'Roasted Brussel Sprouts', 9, 'Re-engineered', 11, 1, 294, 'erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris', 3);
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (14, 'Slammin Salmon', 14, 'definition', 18, 3, 379, 'sit amet sem fusce consequat nulla nisl nunc nisl duis', 3);
-INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, DescriptionText, RestaurantId) VALUES (15, 'Irish Pudding', 42, 'Innovative', 2, 2, 373, 'erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi', 3);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (1, 'Rissoto', 8, 'Italian', 14, 3, 126, 'fancy pasta dish with lots of stuff', 1);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (2, 'Chicken Noodle Soup', 44, NULL, 20, 2, 2, 'Made from a traditional Chicken broth with buckwheat noodles', 1);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (3, 'Corndog', 48, 'American', 29, 3, 280, 'A cafeteria favorite, nice and simply made', 1);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (4, 'Spaghetti and Meatballs', 26, 'Italian', 30, 2, 232, 'Almost like mother made it, but only she could get it right', 1);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (5, 'Biryani', 21, 'Indian', 29, 1, 341, 'A mixed rice dish made with love and a little bit of something special', 1);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (6, 'Ceasar Salad', 44, 'Italian', 4, 1, 178, 'curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis', 2);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (7, 'Hambuger', 20, 'zero tolerance', 30, 2, 282, 'lectus vestibulum quam sapien varius ut blandit non interdum in', 2);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (8, 'Nachos', 41, 'support', 8, 2, 159, 'sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique', 2);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (9, 'Hot Wings', 24, 'workforce', 18, 2, 51, 'odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique', 2);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (10, 'Vegtable Soup', 48, 'Persistent', 30, 3, 163, 'ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae', 2);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (11, 'Green Salad', 22, 'time-frame', 30, 2, 55, 'ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in sagittis', 3);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (12, 'Organic Smoothie', 13, 'Secured', 9, 3, 158, 'quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse', 3);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (13, 'Roasted Brussel Sprouts', 9, 'Re-engineered', 11, 1, 294, 'erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris', 3);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (14, 'Slammin Salmon', 14, 'definition', 18, 3, 379, 'sit amet sem fusce consequat nulla nisl nunc nisl duis', 3);
+INSERT INTO Dish (MenuId, Name, Price, Cuisine, PreparationTime, ServingSize, Calories, Description, RestaurantId) VALUES (15, 'Irish Pudding', 42, 'Innovative', 2, 2, 373, 'erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi', 3);
 
 -- DISH INGREDIENTS -------------------------------------------------------------------------------
 INSERT INTO DishIngredient (MenuId, IngredientId) VALUES (1, 1);
@@ -273,11 +273,11 @@ INSERT INTO DishIngredient (MenuId, IngredientId) VALUES (15, 13);
 INSERT INTO DishIngredient (MenuId, IngredientId) VALUES (15, 14);
 
 -- BEVERAGE -------------------------------------------------------------------------------
-INSERT INTO Beverage (DrinkId, Name, Price, Region, Dscription, Alcoholic) VALUES (1, 'water', 87, NULL, "A nice refreshing glass", false);
-INSERT INTO Beverage (DrinkId, Name, Price, Region, Dscription, Alcoholic) VALUES (2, 'milk', 44, NULL, "Straight from the udder", false);
-INSERT INTO Beverage (DrinkId, Name, Price, Region, Dscription, Alcoholic) VALUES (3, 'orange juice', 29, NULL, "Right off the tree", false);
-INSERT INTO Beverage (DrinkId, Name, Price, Region, Dscription, Alcoholic) VALUES (4, 'martini', 8, 'Italy', "A simple mix", true);
-INSERT INTO Beverage (DrinkId, Name, Price, Region, Dscription, Alcoholic) VALUES (5, 'cutwater', 3, 'United States', "As the brand is always", true);
+INSERT INTO Beverage (DrinkId, Name, Price, Region, Description, Alcoholic) VALUES (1, 'water', 87, NULL, "A nice refreshing glass", false);
+INSERT INTO Beverage (DrinkId, Name, Price, Region, Description, Alcoholic) VALUES (2, 'milk', 44, NULL, "Straight from the udder", false);
+INSERT INTO Beverage (DrinkId, Name, Price, Region, Description, Alcoholic) VALUES (3, 'orange juice', 29, NULL, "Right off the tree", false);
+INSERT INTO Beverage (DrinkId, Name, Price, Region, Description, Alcoholic) VALUES (4, 'martini', 8, 'Italy', "A simple mix", true);
+INSERT INTO Beverage (DrinkId, Name, Price, Region, Description, Alcoholic) VALUES (5, 'cutwater', 3, 'US', "As the brand is always", true);
 
 -- BEVERAGE RESTAURANTS -------------------------------------------------------------------------------
 INSERT INTO RestaurantBeverage (RestaurantId, DrinkId) VALUES (1, 1);

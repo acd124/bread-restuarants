@@ -5,58 +5,82 @@ from src import db
 
 staff = Blueprint("staff", __name__)
 
-# Get all the products from the database
-@staff.route("/products", methods=["GET"])
-def get_products():
-    # get a cursor object from the database
+# Get customer information
+@staff.route("/staff_info/<userId>", methods=["GET"])
+def get_staff(userId):
     cursor = db.get_db().cursor()
-
-    # use cursor to query the database for a list of products
-    cursor.execute("select productCode, productName, productVendor from products")
-
-    # grab the column headers from the returned data
-    column_headers = [x[0] for x in cursor.description]
-
-    # create an empty dictionary object to use in
-    # putting column headers together with data
-    json_data = []
-
-    # fetch all the data from the cursor
-    theData = cursor.fetchall()
-
-    # for each of the rows, zip the data elements together with
-    # the column headers.
-    for row in theData:
-        json_data.append(dict(zip(column_headers, row)))
-
-    return jsonify(json_data)
+    cursor.execute(f"SELECT * FROM Employee WHERE EmployeeId = {userId}")
+    row_headers = [x[0] for x in cursor.description]
+    theData = cursor.fetchone()
+    json_data = dict(zip(row_headers, theData))
+    name = json_data.pop("FirstName", "") + " " + json_data.pop("LastName", "")
+    json_data["Name"] = name
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = "application/json"
+    return the_response
 
 
-# get the top 5 products from the database
-@staff.route("/top5products")
-def get_most_pop_products():
+# Get a staff's current order dishes
+@staff.route("/order_dishes/<userId>", methods=["GET"])
+def get_dishes(userId):
     cursor = db.get_db().cursor()
-    query = """
-        SELECT p.productCode, productName, sum(quantityOrdered) as totalOrders
-        FROM products p JOIN orderdetails od on p.productCode = od.productCode
-        GROUP BY p.productCode, productName
-        ORDER BY totalOrders DESC
-        LIMIT 5;
-    """
-    cursor.execute(query)
-    # grab the column headers from the returned data
-    column_headers = [x[0] for x in cursor.description]
-
-    # create an empty dictionary object to use in
-    # putting column headers together with data
+    # fetch orders
+    cursor.execute(
+        f"SELECT * FROM Orders o JOIN OrderDish od JOIN Dish d\
+            ON o.OrderId = od.OrderId AND od.MenuId = d.MenuId\
+            WHERE EmployeeId={userId} AND OrderStatus in ('cooking', 'ready', 'pending')"
+    )
+    row_headers = [x[0] for x in cursor.description]
     json_data = []
-
-    # fetch all the data from the cursor
     theData = cursor.fetchall()
-
-    # for each of the rows, zip the data elements together with
-    # the column headers.
     for row in theData:
-        json_data.append(dict(zip(column_headers, row)))
+        json_data.append(dict(zip(row_headers, row)))
 
-    return jsonify(json_data)
+    # json_data = [{**x} for x in json_data]
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = "application/json"
+    return the_response
+
+
+# Get a staff's current order drinks
+@staff.route("/order_drinks/<userId>", methods=["GET"])
+def get_drinks(userId):
+    cursor = db.get_db().cursor()
+    # fetch orders
+    cursor.execute(
+        f"SELECT * FROM Orders o JOIN OrderBeverage ob JOIN Beverage b\
+            ON o.OrderId = ob.OrderId AND ob.DrinkId = b.DrinkId\
+            WHERE EmployeeId={userId} AND OrderStatus in ('cooking', 'ready', 'pending')"
+    )
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+
+    json_data = [
+        {**x, "Alcoholic": True if x["Alcoholic"] else False} for x in json_data
+    ]
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = "application/json"
+    return the_response
+
+
+# update an order
+@staff.route("/update_order/<orderId>/<status>", methods=["POST"])
+def update_order(orderId, status):
+    cursor = db.get_db().cursor()
+    # fetch orders
+    cursor.execute(
+        f'UPDATE Orders SET OrderStatus = "{status}" WHERE OrderId = {orderId}'
+    )
+    cursor.execute("commit")
+
+    # json_data = [{**x} for x in json_data]
+    the_response = make_response(jsonify({"result": "Order updated"}))
+    the_response.status_code = 200
+    the_response.mimetype = "application/json"
+    return the_response
