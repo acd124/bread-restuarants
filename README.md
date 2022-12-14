@@ -16,5 +16,5 @@ This repo contains a boilerplate setup for spinning up 2 docker containers:
 
 
 ## Deliverable
-The video presentation of this application can be found at the following url:
+The video presentation of this application can be found at the following url: https://youtu.be/vvT6eHe9_nI
 
