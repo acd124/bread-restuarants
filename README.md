@@ -1,4 +1,4 @@
-# MySQL + Flask Boilerplate Project
+# Bread Restaurant Management
 
 This repo contains a boilerplate setup for spinning up 2 docker containers: 
 1. A MySQL 8 container for obvious reasons
@@ -14,12 +14,7 @@ This repo contains a boilerplate setup for spinning up 2 docker containers:
 1. Build the images with `docker compose build`
 1. Start the containers with `docker compose up`.  To run in detached mode, run `docker compose up -d`. 
 
-## For setting up a Conda Web-Dev environment:
 
-1. `conda create -n webdev python=3.9`
-1. `conda activate webdev`
-1. `pip install flask flask-mysql flask-restful cryptography flask-login`
-
-
-
+## Deliverable
+The video presentation of this application can be found at the following url:
 
